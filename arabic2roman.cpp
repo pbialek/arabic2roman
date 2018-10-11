@@ -1,149 +1,66 @@
+#include<iostream>
+
 #include "arabic2roman.hpp"
 
 std::string arabic2roman(int i) {
+    if(i > 3999) {
+        return "";
+    }
     std::string romanNumber;
 
-    romanNumber = hundredsConverter(i % 1000 / 100 * 100);
-    romanNumber += tensConverter(i % 100 / 10 * 10);
-    romanNumber += unitiesConverter(i % 10);
+    const std::string unities[3] = {"I", "V", "X"};
+    const std::string tens[3] = {"X", "L", "C"};
+    const std::string hundreds[3] = {"C", "D", "M"};
+
+    romanNumber = signsConverter(i % 1000 / 100, hundreds);
+    romanNumber += signsConverter(i % 100 / 10, tens);
+    romanNumber += signsConverter(i % 10, unities);
 
     return romanNumber;
 }
 
-std::string unitiesConverter(int i) {
-    std::string romanUnity;
+std::string signsConverter(int i, const std::string signs[]) {
+    std::string romanNumber = "";
     switch(i) {
         case 1:
-            romanUnity = "I";
+            romanNumber = signs[0];
         break;
 
         case 2:
-            romanUnity = "II";
+            romanNumber = signs[0] + signs[0];
         break;
 
         case 3:
-            romanUnity = "III";
+            romanNumber = signs[0] + signs[0] + signs[0];
         break;
 
         case 4:
-            romanUnity = "IV";
+            romanNumber = signs[0] + signs[1];
         break;
 
         case 5:
-            romanUnity = "V";
+            romanNumber = signs[1];
         break;
 
         case 6:
-            romanUnity = "VI";
+            romanNumber = signs[1] + signs[0];
         break;
 
         case 7:
-            romanUnity = "VII";
+            romanNumber = signs[1] + signs[0] + signs[0];
         break;
 
         case 8:
-            romanUnity = "VIII";
+            romanNumber = signs[1] + signs[0] + signs[0] + signs[0];
         break;
 
         case 9:
-            romanUnity = "IX";
+            romanNumber = signs[0] + signs[2];
         break;
 
         default:
-            romanUnity = "";
+            romanNumber = "";
         break;
     }
-    return romanUnity;
-};
-
-std::string tensConverter(int i) {
-    std::string romanTens;
-    switch(i) {
-        case 10:
-            romanTens = "X";
-        break;
-
-        case 20:
-            romanTens = "XX";
-        break;
-
-        case 30:
-            romanTens = "XXX";
-        break;
-
-        case 40:
-            romanTens = "XL";
-        break;
-
-        case 50:
-            romanTens = "L";
-        break;
-
-        case 60:
-            romanTens = "LX";
-        break;
-
-        case 70:
-            romanTens = "LXX";
-        break;
-
-        case 80:
-            romanTens = "LXXX";
-        break;
-
-        case 90:
-            romanTens = "XC";
-        break;
-
-        default:
-            romanTens = "";
-        break;
-    }
-    return romanTens;
-};
-
-std::string hundredsConverter(int i) {
-    std::string romanHundreds;
-    switch(i) {
-        case 100:
-            romanHundreds = "C";
-        break;
-
-        case 200:
-            romanHundreds = "CC";
-        break;
-
-        case 300:
-            romanHundreds = "CCC";
-        break;
-
-        case 400:
-            romanHundreds = "CD";
-        break;
-
-        case 500:
-            romanHundreds = "D";
-        break;
-
-        case 600:
-            romanHundreds = "DC";
-        break;
-
-        case 700:
-            romanHundreds = "DCC";
-        break;
-
-        case 800:
-            romanHundreds = "DCCC";
-        break;
-
-        case 900:
-            romanHundreds = "CM";
-        break;
-
-        default:
-            romanHundreds = "";
-        break;
-    }
-    return romanHundreds;
+    return romanNumber;
 };
